@@ -1,0 +1,32 @@
+.navigation{
+    position: sticky;
+    top: 0;
+    color: #fff;
+    font-size: 1.5rem;
+    background-color: #097954;
+    margin-bottom: 50px;
+    z-index: 1;
+}
+.navContainer, .navContainer ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    gap: 30px;
+    padding-left: 0;
+}
+
+.link a {
+    text-decoration: none;
+    color: unset;
+}
+
+.cart button {
+    background-color: unset;
+    border: unset;
+    color: unset;
+}
+
+.badge {
+    position: absolute;
+}
