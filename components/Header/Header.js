@@ -1,11 +1,20 @@
 import Image from 'next/image';
-import styles from './Header.module.scss';
 import { Container } from 'react-bootstrap';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import CartDropdown from './Cart-Dropdown';
+import styles from './Header.module.scss';
+import { productsActions } from '../../store/products-slice';
 
 export default function Header(props) {
     const totalQuantity = useSelector(state => state.products.cart.totalQuantity);
+    const cartIsShown = useSelector(state => state.products.cartIsShown);
+    const dispatchActions = useDispatch();
+
+    function showCartHandler() {
+        dispatchActions(productsActions.toggleShowingCart());
+    }
 
     return (
         <nav className={styles.navigation}>
@@ -13,7 +22,7 @@ export default function Header(props) {
                 <ul>
                     <li className={styles.logo}>
                         <Link href='/'>
-                            <Image src='/images/logo.png' width={100} height={80} alt='logo' />
+                            <Image src='/images/logo.png' width={100} height={80} alt='logo' priority={true} />
                         </Link>
                     </li>
                     <li className={styles.link}>
@@ -22,10 +31,11 @@ export default function Header(props) {
                 </ul>
                 <ul>
                     <li className={styles.cart}>
-                        <button>
+                        <button onClick={showCartHandler}>
                             <i className="fa-solid fa-cart-shopping"></i>
                             <div className={styles.badge}>{totalQuantity}</div>
                         </button>
+                        {cartIsShown && <ul><CartDropdown /></ul>}
                     </li>
                     <li className={styles.profile}><i className="fa-solid fa-user"></i></li>
                 </ul>

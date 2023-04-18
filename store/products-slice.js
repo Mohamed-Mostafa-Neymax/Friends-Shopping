@@ -4,37 +4,46 @@ import { HYDRATE } from 'next-redux-wrapper';
 const initialState = {
     products: [],
     cart: {
-        products: [
-            {
-                id: 1,
-                title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-                price: 109.95,
-                description: "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-                category: "men's clothing",
-                image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-                rating: { "rate": 3.9, "count": 120 },
-                quantity: 0
-            }
-        ],
+        products: [],
         totalQuantity: 0,
         totalPrice: 0
-    }
+    },
+    cartIsShown: false
 }
 
 const productsSlice = createSlice({
     name: 'Products',
     initialState,
     reducers: {
-        addProductToCart: function(state, action) {
-            const idIfExisted = state.cart.products.find(product => product.id === action.payload);
-            if( idIfExisted ) {
-                
-            }
-            state.quantity += action.payload;
+
+        toggleShowingCart: function(state, action) {
+            state.cartIsShown = !state.cartIsShown;
         },
+
+        addProductToCart: function(state, action) {
+            const product = state.products.find(product => product.id === action.payload);
+            const productIndex = state.cart.products.findIndex(product => product.id === action.payload);
+            state.cart.totalQuantity++;
+            state.cart.totalPrice += product.price;
+            if( productIndex === -1 ) state.cart.products.push({...product, quantity: 1});
+            else state.cart.products[productIndex].quantity++;
+        },
+
+        removeProductFromCart: function(state, action) {
+            const productIndex = state.cart.products.findIndex(product => product.id === action.payload.id);
+            console.log('productIndex', productIndex);
+            state.cart.totalQuantity--;
+            state.cart.totalPrice -= state.cart.products[productIndex].price;
+            if( (productIndex !== -1 && state.cart.products[productIndex].quantity === 1) || action.payload.entirely ) 
+                state.cart.products.splice(productIndex, 1);
+            else if( productIndex !== -1 && state.cart.products[productIndex].quantity > 1 ) 
+                state.cart.products[productIndex].quantity--;
+        },
+
         getProducts: function(state, action) {
             state.products = action.payload;
         },
+
         extraReducers: {
             [HYDRATE]: (state, action) => {
                 return {

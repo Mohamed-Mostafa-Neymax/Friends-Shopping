@@ -1,12 +1,5 @@
 import styles from './Button.module.scss';
 
 export default function Button(props) {
-
-    function clickHandler() {
-        console.log('Clicked');
-    }
-
-    return (
-        <button className={styles.customButton} onClick={clickHandler}>{props.children}</button>
-    );
+    return <button type={props.type} className={styles.customButton} onClick={props.onClick}>{props.children}</button>;
 }
