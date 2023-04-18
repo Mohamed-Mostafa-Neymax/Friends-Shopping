@@ -4,10 +4,11 @@ import Link from 'next/link';
 import styles from './Cart-Product.module.scss';
 import { productsActions } from '../../store/products-slice';
 import Button from '../ui/Button/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function CartProduct({id, title, price, description, image, quantity}) {
     const dispatchActions = useDispatch();
+    const totalPrice = useSelector(state => state.products.cart.totalPrice);
 
     return (
             <div className={styles.rowProduct}>

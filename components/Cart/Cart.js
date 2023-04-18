@@ -4,6 +4,7 @@ import CartProduct from "./Cart-Product";
 
 export default function Cart() {
     const products = useSelector(state => state.products.cart.products);
+    const totalPrice = useSelector(state => state.products.cart.totalPrice);
 
     return (
         <Container>
@@ -22,6 +23,8 @@ export default function Cart() {
                     )) : <h1 className='text-center'>No products found!</h1>
                     
                 }
+                <hr />
+                <h1>Total Price: ${ products.length > 0 ? totalPrice.toFixed(2) : 0 }</h1>
             </Row>
             </Container>
     );
