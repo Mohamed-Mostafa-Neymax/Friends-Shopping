@@ -1,5 +1,12 @@
+import { Fragment } from "react";
+import Cart from "../../components/Cart/Cart";
+import Header from "../../components/Header/Header";
+
 export default function CartPage() {
     return (
-        <h1>Cart Page</h1>
+        <Fragment>
+            <Header />
+            <Cart />
+        </Fragment>
     );
 }

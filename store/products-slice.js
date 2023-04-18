@@ -8,7 +8,8 @@ const initialState = {
         totalQuantity: 0,
         totalPrice: 0
     },
-    cartIsShown: false
+    cartIsShown: false,
+    gridActivated: true
 }
 
 const productsSlice = createSlice({
@@ -16,7 +17,7 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
 
-        toggleShowingCart: function(state, action) {
+        toggleShowingCart: function(state) {
             state.cartIsShown = !state.cartIsShown;
         },
 
@@ -31,18 +32,23 @@ const productsSlice = createSlice({
 
         removeProductFromCart: function(state, action) {
             const productIndex = state.cart.products.findIndex(product => product.id === action.payload.id);
-            console.log('productIndex', productIndex);
-            state.cart.totalQuantity--;
-            state.cart.totalPrice -= state.cart.products[productIndex].price;
-            if( (productIndex !== -1 && state.cart.products[productIndex].quantity === 1) || action.payload.entirely ) 
+            if( action.payload.entirely ) {
+                state.cart.totalPrice -= state.cart.products[productIndex].price;
                 state.cart.products.splice(productIndex, 1);
-            else if( productIndex !== -1 && state.cart.products[productIndex].quantity > 1 ) 
+                state.cart.totalQuantity--;
+            } else if( productIndex !== -1 && state.cart.products[productIndex].quantity > 1 ) {
+                state.cart.totalPrice -= state.cart.products[productIndex].price;
                 state.cart.products[productIndex].quantity--;
+                state.cart.totalQuantity--;
+            }
         },
 
         getProducts: function(state, action) {
             state.products = action.payload;
         },
+
+        activateGrid: function(state) { state.gridActivated = true },
+        deactivateGrid: function(state) { state.gridActivated = false },
 
         extraReducers: {
             [HYDRATE]: (state, action) => {

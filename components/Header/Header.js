@@ -26,7 +26,7 @@ export default function Header(props) {
                         </Link>
                     </li>
                     <li className={styles.link}>
-                        <Link href='/orders'>Orders</Link>
+                        <Link href='/cart'>Cart</Link>
                     </li>
                 </ul>
                 <ul>

@@ -1,10 +1,10 @@
-.product, .rowProduct { margin-bottom: 20px; }
-.rowProduct { display: flex; gap: 50px; overflow: hidden;}
+.rowProduct { display: flex; gap: 50px; overflow: hidden; margin-bottom: 20px;}
 
 .productImg {
     position: relative;
     text-align: center;
     padding-bottom: 20px;
+    overflow: unset;
 }
 
 .productImg div {
