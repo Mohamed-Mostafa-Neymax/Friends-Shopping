@@ -27,10 +27,11 @@
 .productImg div a { color: #fff; }
 
 .productInfo { width: 100%; }
-.productInfo div {
+.productInfo > div:first-child, .productInfo > div:first-child div {
     display: flex;
     gap: 20px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .productInfo p {

@@ -1,0 +1,48 @@
+.formWrapper {
+    height: 80%;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formWrapper form {
+    width: 50vw;
+    max-width: 80vw;
+    min-width: 250px;
+    position: relative;
+    top: 200px;
+    opacity: 0;
+    padding: 1.5rem;
+    border: 2px solid #097954;
+    border-radius: 20px;
+    animation-name: MovingUp;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes MovingUp {
+    from {
+        top: 200px;
+        opacity: 0;
+    }
+    to {
+        top: 0px;
+        opacity: 1;
+    }
+}
+
+.control {
+    width: 100%;
+}
+
+.invalid {
+    color: red;
+}
+
+.phoneContainer input {
+    width: 100% !important;
+}

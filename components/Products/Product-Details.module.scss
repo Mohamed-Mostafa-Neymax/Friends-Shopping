@@ -1,0 +1,23 @@
+.details {
+    padding: 0.8rem 1rem;
+}
+
+.rate {
+    position: relative;
+    width: fit-content;
+}
+
+.lightStars {
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    white-space: nowrap;
+    i {
+        color: #097954;
+    }
+}
+.darkStars {
+    i {
+        color: #a3a3a3;
+    }
+}

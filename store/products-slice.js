@@ -16,11 +16,6 @@ const productsSlice = createSlice({
     name: 'Products',
     initialState,
     reducers: {
-
-        toggleShowingCart: function(state) {
-            state.cartIsShown = !state.cartIsShown;
-        },
-
         addProductToCart: function(state, action) {
             const product = state.products.find(product => product.id === action.payload);
             const productIndex = state.cart.products.findIndex(product => product.id === action.payload);
@@ -33,9 +28,9 @@ const productsSlice = createSlice({
         removeProductFromCart: function(state, action) {
             const productIndex = state.cart.products.findIndex(product => product.id === action.payload.id);
             if( action.payload.entirely ) {
-                state.cart.totalPrice -= state.cart.products[productIndex].price;
+                state.cart.totalPrice -= state.cart.products[productIndex].price * state.cart.products[productIndex].quantity;
+                state.cart.totalQuantity -= state.cart.products[productIndex].quantity;
                 state.cart.products.splice(productIndex, 1);
-                state.cart.totalQuantity--;
             } else if( productIndex !== -1 && state.cart.products[productIndex].quantity > 1 ) {
                 state.cart.totalPrice -= state.cart.products[productIndex].price;
                 state.cart.products[productIndex].quantity--;
@@ -43,12 +38,10 @@ const productsSlice = createSlice({
             }
         },
 
-        getProducts: function(state, action) {
-            state.products = action.payload;
-        },
-
-        activateGrid: function(state) { state.gridActivated = true },
-        deactivateGrid: function(state) { state.gridActivated = false },
+        toggleShowingCart: function(state) { state.cartIsShown = !state.cartIsShown; },
+        getProducts: function(state, action) { state.products = action.payload; },
+        activateGrid: function(state) { state.gridActivated = true; },
+        deactivateGrid: function(state) { state.gridActivated = false; },
 
         extraReducers: {
             [HYDRATE]: (state, action) => {

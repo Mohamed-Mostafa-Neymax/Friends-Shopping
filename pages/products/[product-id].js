@@ -1,5 +1,12 @@
+import { Fragment } from "react";
+import ProductDetails from "../../components/Products/Product-Details";
+import Header from "../../components/Header/Header";
+
 export default function OrderDetailsPage() {
     return (
-        <h1>Product Details Page</h1>
+        <Fragment>
+            <Header />
+            <ProductDetails />
+        </Fragment>
     );
 }

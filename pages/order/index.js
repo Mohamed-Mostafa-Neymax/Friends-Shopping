@@ -1,5 +1,12 @@
+import { Fragment } from "react";
+import Header from "../../components/Header/Header";
+import Order from "../../components/Order/Order";
+
 export default function OrderFormPage() {
     return (
-        <h1>Form Order Page</h1>
+        <Fragment>
+            <Header />
+            <Order />
+        </Fragment>
     );
 }
