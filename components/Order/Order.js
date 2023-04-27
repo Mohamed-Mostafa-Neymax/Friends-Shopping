@@ -2,19 +2,30 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import PhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css'
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../ui/Button/Button";
 import styles from './Order.module.scss';
+import { postCartThunk } from "../../store/products-thunk";
 
 export default function Order() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const router = useRouter();
+    const cart = useSelector(state => state.products.cart);
+    const dispatchAction = useDispatch();
 
-    const onSubmit = data => console.log(data);
+    function onSubmitHandler(data) {
+        dispatchAction(postCartThunk({...cart, userData: {
+            name: data.fullName,
+            address: data.address,
+            phone: data.mobile,
+            email: data.email
+        }}));
+    };
 
     return (
         <div className={styles.formWrapper}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmitHandler)}>
 
                 <div className="form-group mb-3">
                     <label htmlFor="fullName">Enter your Name</label>

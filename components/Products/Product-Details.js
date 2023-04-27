@@ -25,7 +25,7 @@ export default function ProductDetails() {
                         <h3 className='mx-3'>{product.title}</h3>
                         <h3 className='mx-3'>${product.price}</h3>
                         <p className='mx-3'>{product.description}</p>
-                        <h3 className='mx-3'>${product.category}</h3>
+                        <h3 className='mx-3'>{product.category}</h3>
                         <div className='d-flex'>
                             <div className='mx-3'>
                                 <div className={`${styles.rate}`}>

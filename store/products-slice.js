@@ -6,7 +6,13 @@ const initialState = {
     cart: {
         products: [],
         totalQuantity: 0,
-        totalPrice: 0
+        totalPrice: 0,
+        userData: {
+            name: '',
+            address: '',
+            phone: '',
+            email: ''
+        }
     },
     cartIsShown: false,
     gridActivated: true
@@ -16,6 +22,8 @@ const productsSlice = createSlice({
     name: 'Products',
     initialState,
     reducers: {
+        getProducts: function(state, action) { state.products = action.payload; },
+
         addProductToCart: function(state, action) {
             const product = state.products.find(product => product.id === action.payload);
             const productIndex = state.cart.products.findIndex(product => product.id === action.payload);
@@ -38,8 +46,13 @@ const productsSlice = createSlice({
             }
         },
 
+        getCartProducts: function(state, action) {
+            state.cart.products = action.payload.products;
+            state.cart.totalQuantity = action.payload.totalQuantity;
+            state.cart.totalPrice = action.payload.totalPrice;
+        },
+        
         toggleShowingCart: function(state) { state.cartIsShown = !state.cartIsShown; },
-        getProducts: function(state, action) { state.products = action.payload; },
         activateGrid: function(state) { state.gridActivated = true; },
         deactivateGrid: function(state) { state.gridActivated = false; },
 

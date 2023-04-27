@@ -2,12 +2,26 @@ import Image from 'next/image';
 import { Container } from 'react-bootstrap';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import CartDropdown from './Cart-Dropdown';
 import styles from './Header.module.scss';
 import { productsActions } from '../../store/products-slice';
+import { fetchProductsThunk } from '../../store/products-thunk';
+
+let initialcart = true;
 
 export default function Header(props) {
+    const dispatchAction = useDispatch();
+    const cartProducts = useSelector(state => state.products.cart.products);
+
+    useEffect(() => {
+        if (initialcart) {
+            dispatchAction(fetchProductsThunk('cart'));
+            initialcart = false;
+        } else return;
+    }, [cartProducts, dispatchAction]);
+
     const totalQuantity = useSelector(state => state.products.cart.totalQuantity);
     const cartIsShown = useSelector(state => state.products.cartIsShown);
     const dispatchActions = useDispatch();
