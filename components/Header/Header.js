@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import { Container } from 'react-bootstrap';
-import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container } from 'react-bootstrap';
+import Image from 'next/image';
+import Link from 'next/link';
 
 import CartDropdown from './Cart-Dropdown';
 import styles from './Header.module.scss';
@@ -10,25 +10,29 @@ import { productsActions } from '../../store/products-slice';
 import { fetchProductsThunk } from '../../store/products-thunk';
 
 let initialcart = true;
+let initialProducts = true;
 
-export default function Header(props) {
-    const dispatchAction = useDispatch();
+export default function Header() {
+    const dispatch = useDispatch();
     const cartProducts = useSelector(state => state.products.cart.products);
+    const products = useSelector(state => state.products.products);
+    const totalQuantity = useSelector(state => state.products.cart.totalQuantity);
+    const cartIsShown = useSelector(state => state.products.cartIsShown);
 
     useEffect(() => {
         if (initialcart) {
-            dispatchAction(fetchProductsThunk('cart'));
+            dispatch(fetchProductsThunk('cart'));
             initialcart = false;
         } else return;
-    }, [cartProducts, dispatchAction]);
+    }, [cartProducts, dispatch]);
+    useEffect(() => {
+        if (initialProducts) {
+            dispatch(fetchProductsThunk('allProducts'));
+            initialProducts = false;
+        } else return;
+    }, [products, dispatch]);
 
-    const totalQuantity = useSelector(state => state.products.cart.totalQuantity);
-    const cartIsShown = useSelector(state => state.products.cartIsShown);
-    const dispatchActions = useDispatch();
-
-    function showCartHandler() {
-        dispatchActions(productsActions.toggleShowingCart());
-    }
+    function showCartHandler() { dispatch(productsActions.toggleShowingCart()); }
 
     return (
         <nav className={styles.navigation}>

@@ -1,6 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './Product-Details.module.scss';
@@ -14,11 +14,12 @@ export default function ProductDetails() {
     const productID = +router.query['product-id'];
     const product = products.find(product => product.id === productID);
 
-    return (
+    if( !product ) return <h1 className='text-center'>Loading</h1>;
+    else return (
         <Container>
             <Row>
                 <Col sm={12} md={4}>
-                    <Image src={product.image} width={500} height={500} alt={product.title} layout={"responsive"} />
+                    <Image src={product.image} width={500} height={500} alt={product.title} layout={"responsive"} priority />
                 </Col>
                 <Col sm={12} md={8}>
                     <div className={styles.details}>
