@@ -14,7 +14,7 @@ export default function CartProduct({id, title, price, description, image, quant
                 <div className={styles.productImg}>
                     <Image src={image} width={200} height={200} alt={title} priority={true} />
                     <div>
-                        <Link href={`/products/${id}`}>View Details</Link>
+                        <Link href={`/${id}`}>View Details</Link>
                     </div>
                 </div>
                 <div className={styles.productInfo}>

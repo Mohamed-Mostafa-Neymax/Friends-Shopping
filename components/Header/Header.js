@@ -12,22 +12,24 @@ import { fetchProductsThunk } from '../../store/products-thunk';
 let initialcart = true;
 let initialProducts = true;
 
-export default function Header() {
+export default function Header({allProducts, cartProducts}) {
     const dispatch = useDispatch();
-    const cartProducts = useSelector(state => state.products.cart.products);
+    const cartProductsList = useSelector(state => state.products.cart.products);
     const products = useSelector(state => state.products.products);
     const totalQuantity = useSelector(state => state.products.cart.totalQuantity);
     const cartIsShown = useSelector(state => state.products.cartIsShown);
 
     useEffect(() => {
         if (initialcart) {
-            dispatch(fetchProductsThunk('cart'));
+            // dispatch(fetchProductsThunk('cart'));
+            dispatch(productsActions.getCartProducts(cartProducts));
             initialcart = false;
         } else return;
-    }, [cartProducts, dispatch]);
+    }, [cartProductsList, dispatch]);
     useEffect(() => {
         if (initialProducts) {
-            dispatch(fetchProductsThunk('allProducts'));
+            // dispatch(fetchProductsThunk('allProducts'));
+            dispatch(productsActions.getProducts(allProducts));
             initialProducts = false;
         } else return;
     }, [products, dispatch]);
