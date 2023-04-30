@@ -7,7 +7,7 @@ import Link from 'next/link';
 import CartDropdown from './Cart-Dropdown';
 import styles from './Header.module.scss';
 import { productsActions } from '../../store/products-slice';
-import { fetchProductsThunk } from '../../store/products-thunk';
+// import { fetchProductsThunk } from '../../store/products-thunk';
 
 let initialcart = true;
 let initialProducts = true;
